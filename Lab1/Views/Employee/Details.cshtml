@@ -1,0 +1,48 @@
+﻿@model Employee_App.Models.EmployeeModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h2>Employee Details</h2>
+
+<div>
+    <hr />
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th scope="row">First Name</th>
+                <td>@Html.DisplayFor(model => model.FirstName)</td>
+            </tr>
+            <tr>
+                <th scope="row">Last Name</th>
+                <td>@Html.DisplayFor(model => model.LastName)</td>
+            </tr>
+            <tr>
+                <th scope="row">PESEL</th>
+                <td>@Html.DisplayFor(model => model.PESEL)</td>
+            </tr>
+            <tr>
+                <th scope="row">Position</th>
+                <td>@Html.DisplayFor(model => model.Position)</td>
+            </tr>
+            <tr>
+                <th scope="row">Department</th>
+                <td>@Html.DisplayFor(model => model.Department)</td>
+            </tr>
+            <tr>
+                <th scope="row">Hire Date</th>
+                <td>@Html.DisplayFor(model => model.HireDate)</td>
+            </tr>
+            <tr>
+                <th scope="row">Termination Date</th>
+                <td>@Html.DisplayFor(model => model.TerminationDate)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>

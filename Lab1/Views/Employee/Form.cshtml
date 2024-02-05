@@ -1,0 +1,68 @@
+﻿@model Employee_App.Models.EmployeeModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h2>Add Employee</h2>
+<form asp-action="Create" asp-controller="Employee" method="post">
+    <div asp-validation-summary="All"></div>
+
+    <div>
+        <label asp-for="FirstName"></label>
+        <div>
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+        <input class="form-control" type="text" asp-for="FirstName" />
+    </div>
+
+    <div>
+        <label asp-for="LastName"></label>
+        <div>
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+        <input class="form-control" type="text" asp-for="LastName" />
+    </div>
+
+    <div>
+        <label asp-for="PESEL"></label>
+        <div>
+            <span asp-validation-for="PESEL" class="text-danger"></span>
+        </div>
+        <input class="form-control" type="text" asp-for="PESEL" />
+    </div>
+
+    <div>
+        <label asp-for="Position"></label>
+        <div>
+            <span asp-validation-for="Position" class="text-danger"></span>
+        </div>
+        <input class="form-control" type="text" asp-for="Position" />
+    </div>
+
+    <div>
+        <label asp-for="Department"></label>
+        <div>
+            <span asp-validation-for="Department" class="text-danger"></span>
+        </div>
+        <input class="form-control" type="text" asp-for="Department" />
+    </div>
+
+    <div>
+        <label asp-for="HireDate"></label>
+        <div>
+            <span asp-validation-for="HireDate" class="text-danger"></span>
+        </div>
+        <input class="form-control" type="date" asp-for="HireDate" />
+    </div>
+
+    <div>
+        <label asp-for="TerminationDate"></label>
+        <div>
+            <span asp-validation-for="TerminationDate" class="text-danger"></span>
+        </div>
+        <input class="form-control" type="date" asp-for="TerminationDate" />
+    </div>
+
+    <button type="submit">Save</button>
+</form>
