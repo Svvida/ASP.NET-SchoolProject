@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240207201526_Employer")]
+    partial class Employer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.26");
@@ -27,9 +29,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
-
-                    b.Property<int?>("EmployerId")
-                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("EmploymentDate")
                         .HasColumnType("TEXT")
@@ -61,8 +60,6 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployerId");
-
                     b.ToTable("Employees");
 
                     b.HasData(
@@ -86,51 +83,6 @@ namespace Data.Migrations
                             PESEL = "12345678902",
                             Position = "Kierownik"
                         });
-                });
-
-            modelBuilder.Entity("Data.Entities.EmployerEntity", b =>
-                {
-                    b.Property<int>("EmployerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NIP")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("EmployerId");
-
-                    b.ToTable("Employers");
-                });
-
-            modelBuilder.Entity("Data.Entities.EmployeeEntity", b =>
-                {
-                    b.HasOne("Data.Entities.EmployerEntity", "Employer")
-                        .WithMany("Employees")
-                        .HasForeignKey("EmployerId");
-
-                    b.Navigation("Employer");
-                });
-
-            modelBuilder.Entity("Data.Entities.EmployerEntity", b =>
-                {
-                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

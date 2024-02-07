@@ -40,5 +40,9 @@ namespace Data.Entities
 
         [Column("termination_date")]
         public DateTime? TerminationDate { get; set; } // Nullable, ponieważ data zwolnienia może nie być znana
+        [HiddenInput]
+        public int? EmployerId { get; set; }
+        [ForeignKey("EmployerId")]
+        public EmployerEntity? Employer { get; set; }
     }
 }

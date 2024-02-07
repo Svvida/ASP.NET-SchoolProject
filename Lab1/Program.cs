@@ -13,7 +13,7 @@ namespace Lab1
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<Data.AppDbContext>();
-            builder.Services.AddTransient<IEmployeeService, EFContactService>();
+            builder.Services.AddTransient<IEmployeeService, EFEmployeeService>();
             builder.Services.AddSingleton<IDateTimeProvider, CurrentDateTimeProvider>();
 
             var app = builder.Build();

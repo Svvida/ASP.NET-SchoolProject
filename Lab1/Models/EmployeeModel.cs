@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
 namespace Employee_App.Models
@@ -47,7 +48,8 @@ namespace Employee_App.Models
         [Display(Name = "Data zakończenia")]
         [ValidateTermination(ErrorMessage = "Data zakończenia musi być późniejsza niż data zatrudnienia.")]
         public DateTime? TerminationDate { get; set; }
-
+        public int? EmployerId { get; set; }
+        public EmployerEntity? Employer { get; set; }
     }
     public class ValidateTerminationAttribute : ValidationAttribute
     {

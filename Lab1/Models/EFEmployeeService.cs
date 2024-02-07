@@ -3,11 +3,11 @@ using Employee_App.Mappers;
 
 namespace Employee_App.Models
 {
-    public class EFContactService : IEmployeeService
+    public class EFEmployeeService : IEmployeeService
     {
         private readonly AppDbContext _context;
 
-        public EFContactService(AppDbContext employeeService)
+        public EFEmployeeService(AppDbContext employeeService)
         {
             _context = employeeService;
         }
@@ -30,7 +30,9 @@ namespace Employee_App.Models
 
         public IEnumerable<EmployeeModel> GetAllEmployees()
         {
-            return (IEnumerable<EmployeeModel>)_context.Employees.Select(e => EmployeeMapper.FromEntity(e)).ToList();
+            return _context.Employees
+                .Where(e => e.EmployerId == null)
+                .Select(e => EmployeeMapper.FromEntity(e)).ToList();
         }
 
         public EmployeeModel? GetEmployeeById(int employeeid)

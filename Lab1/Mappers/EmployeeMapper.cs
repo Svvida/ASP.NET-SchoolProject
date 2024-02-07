@@ -15,7 +15,9 @@ namespace Employee_App.Mappers
                 Position = model.Position,
                 Department = model.Department,
                 EmploymentDate = model.HireDate,
-                TerminationDate = model.TerminationDate
+                TerminationDate = model.TerminationDate,
+                EmployerId = model.EmployerId,
+                Employer = model.Employer
             };
         }
 
@@ -30,7 +32,9 @@ namespace Employee_App.Mappers
                 Position = entity.Position,
                 Department = entity.Department,
                 HireDate = entity.EmploymentDate,
-                TerminationDate = entity.TerminationDate
+                TerminationDate = entity.TerminationDate,
+                EmployerId = entity.EmployerId,
+                Employer = entity.Employer
             };
         }
     }
