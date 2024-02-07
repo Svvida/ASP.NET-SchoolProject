@@ -44,5 +44,6 @@ namespace Data.Entities
         public int? EmployerId { get; set; }
         [ForeignKey("EmployerId")]
         public EmployerEntity? Employer { get; set; }
+        public ICollection<EmploymentHistoryEntity> EmploymentHistory { get; set; }
     }
 }

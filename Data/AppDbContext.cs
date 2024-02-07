@@ -14,6 +14,7 @@ namespace Data
     {
         public DbSet<EmployeeEntity> Employees { get; set; }
         public DbSet<EmployerEntity> Employers { get; set; }
+        public DbSet<EmploymentHistoryEntity> EmploymentHistory { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -25,6 +26,74 @@ namespace Data
             base.OnModelCreating(modelBuilder);
 
             string ADMIN_ID = Guid.NewGuid().ToString();
+            string USER_ID = Guid.NewGuid().ToString();
+
+            string ADMIN_ROLE_ID = Guid.NewGuid().ToString();
+            string USER_ROLE_ID = Guid.NewGuid().ToString();
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+                               new IdentityRole
+                               {
+                                Id = ADMIN_ROLE_ID,
+                                Name = "admin",
+                                NormalizedName = "admin",
+                                ConcurrencyStamp = ADMIN_ROLE_ID
+                                },
+                                new IdentityRole
+                                {
+                                Id = USER_ROLE_ID,
+                                Name = "User",
+                                NormalizedName = "USER",
+                                ConcurrencyStamp = USER_ROLE_ID
+                                });
+
+            var admin = new IdentityUser
+            {
+                Id = ADMIN_ID,
+                UserName = "admin",
+                NormalizedUserName = "admin",
+                Email = "admin@wsei.edu.pl",
+                NormalizedEmail = "ADMIN@WSEI.EDU.PL",
+                EmailConfirmed = true,
+            };
+            var user = new IdentityUser
+            {
+                Id = USER_ID,
+                UserName = "user",
+                NormalizedUserName = "user",
+                Email = "user@wsei.edu.pl",
+                NormalizedEmail = "USER@WSEI.EDU.PL",
+                EmailConfirmed = true,
+            };
+
+            PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
+            admin.PasswordHash = ph.HashPassword(admin, "P@ssw0rd");
+            user.PasswordHash = ph.HashPassword(user, "P@ssw0rd");
+
+            modelBuilder.Entity<IdentityUser>().HasData(admin, user);
+
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+                               new IdentityUserRole<string>
+                               {
+                                RoleId = ADMIN_ROLE_ID,
+                                UserId = ADMIN_ID
+                                },
+                                new IdentityUserRole<string>
+                                {
+                                RoleId = USER_ROLE_ID,
+                                UserId = USER_ID
+                                });
+
+            modelBuilder.Entity<EmployerEntity>()
+                .HasMany(e => e.Employees)
+                .WithOne(e => e.Employer)
+                .HasForeignKey(e => e.EmployerId);
+            modelBuilder.Entity<EmployeeEntity>()
+                .HasMany(e => e.EmploymentHistory)
+                .WithOne(eh => eh.Employee)
+                .HasForeignKey(eh => eh.EmployeeId);
+
+
             modelBuilder.Entity<EmployeeEntity>()
                 .HasKey(e => e.Id);
             modelBuilder.Entity<EmployeeEntity>()
