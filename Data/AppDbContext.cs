@@ -18,7 +18,7 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Data source =C:\Users\ksvvi\source\repos\ASP.NET-SchoolProject\employees.db");
+            optionsBuilder.UseSqlite(@"Data source =..\employees.db");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
