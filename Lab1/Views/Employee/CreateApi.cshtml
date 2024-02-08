@@ -1,0 +1,46 @@
+﻿@model Employee_App.Models.EmployeeModel
+
+<h1>Wyszukaj pracownika</h1>
+
+<form id="employee-form">
+    <div class="form-group m-2">
+        <label for="filter">Filter by name:</label>
+        <input type="text" id="filter" name="filter" class="form-control" />
+    </div>
+    <button type="button" class="btn btn-primary" onclick="fetchEmployees()">Fetch Employees</button>
+</form>
+
+<div id="employees-container" class="m-2"></div>
+
+@section Scripts {
+    <script>
+        function fetchEmployees() {
+            var filter = document.getElementById('filter').value;
+            fetch(`/api/employees?filter=${filter}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayEmployees(data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        function displayEmployees(employees) {
+            var container = document.getElementById('employees-container');
+            container.innerHTML = '<h2>Wyfiltrowani Pracownicy:</h2>';
+            var ul = document.createElement('ul');
+            employees.forEach(function (employee) {
+                var li = document.createElement('li');
+                li.textContent = employee.firstName + " " + employee.lastName; // Dodaj odpowiednie właściwości modelu pracownika
+                ul.appendChild(li);
+            });
+            container.appendChild(ul);
+        }
+    </script>
+}

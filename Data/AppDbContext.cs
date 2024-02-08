@@ -42,8 +42,8 @@ namespace Data
                                 new IdentityRole
                                 {
                                 Id = USER_ROLE_ID,
-                                Name = "User",
-                                NormalizedName = "USER",
+                                Name = "user",
+                                NormalizedName = "user",
                                 ConcurrencyStamp = USER_ROLE_ID
                                 });
 
@@ -51,7 +51,7 @@ namespace Data
             {
                 Id = ADMIN_ID,
                 UserName = "admin",
-                NormalizedUserName = "admin",
+                NormalizedUserName = "ADMIN",
                 Email = "admin@wsei.edu.pl",
                 NormalizedEmail = "ADMIN@WSEI.EDU.PL",
                 EmailConfirmed = true,
@@ -60,29 +60,29 @@ namespace Data
             {
                 Id = USER_ID,
                 UserName = "user",
-                NormalizedUserName = "user",
+                NormalizedUserName = "USER",
                 Email = "user@wsei.edu.pl",
                 NormalizedEmail = "USER@WSEI.EDU.PL",
                 EmailConfirmed = true,
             };
 
             PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
-            admin.PasswordHash = ph.HashPassword(admin, "P@ssw0rd");
+            admin.PasswordHash = ph.HashPassword(admin, "P@ssword1");
             user.PasswordHash = ph.HashPassword(user, "P@ssw0rd");
 
             modelBuilder.Entity<IdentityUser>().HasData(admin, user);
 
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(
-                               new IdentityUserRole<string>
-                               {
-                                RoleId = ADMIN_ROLE_ID,
-                                UserId = ADMIN_ID
-                                },
-                                new IdentityUserRole<string>
-                                {
-                                RoleId = USER_ROLE_ID,
-                                UserId = USER_ID
-                                });
+                   new IdentityUserRole<string>
+                   {
+                       RoleId = ADMIN_ROLE_ID,
+                       UserId = ADMIN_ID
+                   },
+                    new IdentityUserRole<string>
+                    {
+                        RoleId = USER_ROLE_ID,
+                        UserId = USER_ID
+                    });
 
             modelBuilder.Entity<EmployerEntity>()
                 .HasMany(e => e.Employees)

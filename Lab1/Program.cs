@@ -2,6 +2,7 @@ using Employee_App.Models;
 using Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Lab1
 {
@@ -17,6 +18,7 @@ namespace Lab1
             builder.Services.AddRazorPages();
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<Data.AppDbContext>();
+           // builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
 
             builder.Services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()

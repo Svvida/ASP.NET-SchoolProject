@@ -1,8 +1,10 @@
 ﻿using Employee_App.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Employee_App.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;
@@ -11,13 +13,12 @@ namespace Employee_App.Controllers
         {
             _employeeService = employeeService;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var employees = _employeeService.GetAllEmployees();
             return View(employees);
         }
-
         public IActionResult Details(int id)
         {
             var employee = _employeeService.GetEmployeeById(id);
@@ -96,6 +97,23 @@ namespace Employee_App.Controllers
         {
             _employeeService.DeleteEmployee(id);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult CreateApi()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateApi(EmployeeModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View(model);
+            }
         }
     }
 }
