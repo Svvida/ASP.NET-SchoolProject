@@ -31,5 +31,7 @@ namespace Data.Entities
         public string NIP { get; set; }
         public ICollection <EmployeeEntity> Employees { get; set; }
 
+        public ICollection<EmploymentHistoryEntity> Employments { get; set; }
+
     }
 }

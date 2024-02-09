@@ -14,9 +14,28 @@ namespace Employee_App.Controllers
             _context = context;
         }
         [HttpGet]
-        public IActionResult GetFiltered(string filter)
+        public IActionResult GetFiltered(string category, string filter)
         {
-            return Ok(_context.Employees.Where(e => e.FirstName.Contains(filter) || e.LastName.Contains(filter)).ToList());
+            var query = _context.Employees.AsQueryable();
+
+            switch (category)
+            {
+                case "firstName":
+                    query = query.Where(e => e.FirstName.Contains(filter));
+                    break;
+                case "lastName":
+                    query = query.Where(e => e.LastName.Contains(filter));
+                    break;
+                case "Position":
+                    query = query.Where(e => e.Position.Contains(filter));
+                    break;
+                case "Department":
+                    query = query.Where(e => e.Department.Contains(filter));
+                    break;
+            }
+
+            return Ok(query.ToList());
         }
+
     }
 }

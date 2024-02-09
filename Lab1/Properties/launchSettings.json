@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "Lab1": {
+    "Employee_App": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

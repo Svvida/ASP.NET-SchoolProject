@@ -1,34 +1,39 @@
-﻿using Employee_App.Models.Employee;
+﻿using Employee_App.Models;
+using Employee_App.Models.Employee;
+using Employee_App.Models.Employer;
+using Employee_App.Models.EmploymentHistory;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Employee_App.Controllers
 {
     [Authorize]
-    public class EmployeeController : Controller
+    public class EmployerController : Controller
     {
-        private readonly IEmployeeService _employeeService;
+        private readonly IEmployerService _employerService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployerController(IEmployerService employerService)
         {
-            _employeeService = employeeService;
+            _employerService = employerService;
         }
+
         [AllowAnonymous]
         public IActionResult Index()
         {
-            var employees = _employeeService.GetAllEmployees();
-            return View(employees);
+            var employers = _employerService.GetAllEmployers();
+            return View(employers);
         }
+
         public IActionResult Details(int id)
         {
-            var employee = _employeeService.GetEmployeeById(id);
+            var employer = _employerService.GetEmployerById(id);
 
-            if (employee == null)
+            if (employer == null)
             {
                 return NotFound();
             }
 
-            return View(employee);
+            return View(employer);
         }
 
         [HttpGet]
@@ -38,13 +43,13 @@ namespace Employee_App.Controllers
             return View("Form");
         }
 
-        [Authorize(Roles ="admin")]
+        [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult Create(EmployeeModel model)
+        public IActionResult Create(EmployerModel model)
         {
             if (ModelState.IsValid)
             {
-                _employeeService.AddEmployee(model);
+                _employerService.AddEmployer(model);
                 return RedirectToAction("Index");
             }
             else
@@ -56,7 +61,7 @@ namespace Employee_App.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var employee = _employeeService.GetEmployeeById(id);
+            var employee = _employerService.GetEmployerById(id);
 
             if (employee == null)
             {
@@ -67,11 +72,11 @@ namespace Employee_App.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(EmployeeModel model)
+        public IActionResult Edit(EmployerModel model)
         {
             if (ModelState.IsValid)
             {
-                _employeeService.UpdateEmployee(model.Id, model);
+                _employerService.UpdateEmployer(model.EmployerId, model);
                 return RedirectToAction("Index");
             }
             else
@@ -84,7 +89,7 @@ namespace Employee_App.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
-            var employee = _employeeService.GetEmployeeById(id);
+            var employee = _employerService.GetEmployerById(id);
 
             if (employee == null)
             {
@@ -98,25 +103,8 @@ namespace Employee_App.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult DeleteConfirmed(int id)
         {
-            _employeeService.DeleteEmployee(id);
+            _employerService.DeleteEmployer(id);
             return RedirectToAction("Index");
-        }
-
-        public IActionResult CreateApi()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult CreateApi(EmployeeModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return View(model);
-            }
         }
     }
 }

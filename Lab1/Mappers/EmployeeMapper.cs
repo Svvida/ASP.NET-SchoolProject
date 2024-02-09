@@ -1,5 +1,5 @@
 ﻿using Data.Entities;
-using Employee_App.Models;
+using Employee_App.Models.Employee;
 namespace Employee_App.Mappers
 {
     public class EmployeeMapper

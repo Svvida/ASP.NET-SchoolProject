@@ -21,6 +21,10 @@ namespace Data.Entities
         public DateTime? TerminationDate { get; set; }
         public string Position { get; set; }
         public string Department { get; set; }
+        [Required]
+        public int EmployerId { get; set; }
+        [ForeignKey("EmployerId")]
+        public EmployerEntity Employer { get; set; }
 
     }
 }

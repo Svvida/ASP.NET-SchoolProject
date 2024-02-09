@@ -1,4 +1,4 @@
-﻿namespace Employee_App.Models
+﻿namespace Employee_App.Models.Employee
 {
     public interface IEmployeeService
     {

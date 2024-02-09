@@ -1,10 +1,13 @@
-using Employee_App.Models;
 using Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Employee_App.Models.Employee;
+using Employee_App.Models.Employer;
+using Employee_App.Models.EmploymentHistory;
+using Employee_App.Models;
 
-namespace Lab1
+namespace Employee_App
 {
     public class Program
     {
@@ -24,8 +27,9 @@ namespace Lab1
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            builder.Services.AddTransient<IEmployeeService, EFEmployeeService>();
-            builder.Services.AddSingleton<IDateTimeProvider, CurrentDateTimeProvider>();
+            builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+            builder.Services.AddTransient<IEmployerService, EmployerService>();
+            builder.Services.AddTransient<IEmploymentHistoryService, EmploymentHistoryService>();
 
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();

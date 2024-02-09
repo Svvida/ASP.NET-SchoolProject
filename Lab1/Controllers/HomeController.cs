@@ -1,8 +1,8 @@
-﻿using Lab1.Models;
+﻿using Employee_App.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Lab1.Controllers
+namespace Employee_App.Controllers
 {
     public class HomeController : Controller
     {

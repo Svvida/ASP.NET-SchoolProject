@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace Employee_App.Models
+namespace Employee_App.Models.Employee
 {
     public class EmployeeModel
     {
@@ -50,6 +50,8 @@ namespace Employee_App.Models
         public DateTime? TerminationDate { get; set; }
         public int? EmployerId { get; set; }
         public EmployerEntity? Employer { get; set; }
+
+        public ICollection<EmploymentHistoryEntity> EmploymentHisotry { get; set; }
     }
     public class ValidateTerminationAttribute : ValidationAttribute
     {

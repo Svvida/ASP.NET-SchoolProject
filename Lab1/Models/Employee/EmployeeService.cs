@@ -1,13 +1,14 @@
 ﻿using Data;
 using Employee_App.Mappers;
+using Microsoft.EntityFrameworkCore;
 
-namespace Employee_App.Models
+namespace Employee_App.Models.Employee
 {
-    public class EFEmployeeService : IEmployeeService
+    public class EmployeeService : IEmployeeService
     {
         private readonly AppDbContext _context;
 
-        public EFEmployeeService(AppDbContext employeeService)
+        public EmployeeService(AppDbContext employeeService)
         {
             _context = employeeService;
         }
@@ -37,13 +38,18 @@ namespace Employee_App.Models
 
         public EmployeeModel? GetEmployeeById(int employeeid)
         {
-            var entity = _context.Employees.Find(employeeid);
+            var entity = _context.Employees
+                .Include(e => e.EmploymentHistory) // Załącz historię zatrudnienia
+                .FirstOrDefault(e => e.Id == employeeid);
+
             if (entity != null)
             {
-                return (EmployeeModel?)EmployeeMapper.FromEntity(_context.Employees.Find(employeeid));
+                return EmployeeMapper.FromEntity(entity);
             }
-            else return null;
-
+            else
+            {
+                return null;
+            }
         }
 
         public void UpdateEmployee(int id, EmployeeModel employee)
