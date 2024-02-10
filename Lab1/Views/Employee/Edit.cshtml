@@ -2,19 +2,19 @@
 
 @{
 }
-<h2>Edit Employee</h2>
+<h2>Zmień dane pracownika</h2>
 
 <form asp-action="Edit" method="post">
     <input type="hidden" asp-for="Id" />
 
     <div class="form-group">
-        <label asp-for="FirstName" class="form-label">First Name</label>
+        <label asp-for="FirstName" class="form-label">Imię</label>
         <input asp-for="FirstName" class="form-control" />
         <span asp-validation-for="FirstName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="LastName" class="form-label">Last Name</label>
+        <label asp-for="LastName" class="form-label">Nazwisko</label>
         <input asp-for="LastName" class="form-control" />
         <span asp-validation-for="LastName" class="text-danger"></span>
     </div>
@@ -26,25 +26,25 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="Position" class="form-label">Position</label>
+        <label asp-for="Position" class="form-label">Stanowisko</label>
         <input asp-for="Position" class="form-control" />
         <span asp-validation-for="Position" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="Department" class="form-label">Department</label>
+        <label asp-for="Department" class="form-label">Oddział</label>
         <input asp-for="Department" class="form-control" />
         <span asp-validation-for="Department" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="HireDate" class="form-label">Hire Date</label>
+        <label asp-for="HireDate" class="form-label">Data zatrudnienia</label>
         <input asp-for="HireDate" type="date" class="form-control" />
         <span asp-validation-for="HireDate" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="TerminationDate" class="form-label">Termination Date</label>
+        <label asp-for="TerminationDate" class="form-label">Data zakończenia pracy</label>
         <input asp-for="TerminationDate" type="date" class="form-control" />
         <span asp-validation-for="TerminationDate" class="text-danger"></span>
     </div>
