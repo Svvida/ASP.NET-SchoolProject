@@ -1,0 +1,53 @@
+﻿@model Employee_App.Models.Employer.EmployerModel
+
+<h2>Edytuj Pracodawcę</h2>
+
+<form asp-action="Edit" method="post" class="needs-validation" novalidate>
+    @Html.HiddenFor(model => model.EmployerId)
+
+    <div class="form-group">
+        <label asp-for="FirstName" class="form-label">Imię:</label>
+        <input asp-for="FirstName" class="form-control" />
+        <div class="invalid-feedback">Pole "Imię" jest wymagane.</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName" class="form-label">Nazwisko:</label>
+        <input asp-for="LastName" class="form-control" />
+        <div class="invalid-feedback">Pole "Nazwisko" jest wymagane.</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CompanyName" class="form-label">Nazwa Firmy:</label>
+        <input asp-for="CompanyName" class="form-control" />
+        <div class="invalid-feedback">Pole "Nazwa Firmy" jest wymagane.</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NIP" class="form-label">NIP:</label>
+        <input asp-for="NIP" class="form-control" />
+        <div class="invalid-feedback">Podaj prawidłowy NIP.</div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="City" class="form-label">Miasto:</label>
+            <input asp-for="City" class="form-control" />
+            <div class="invalid-feedback">Pole "Miasto" jest wymagane.</div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label asp-for="PostalCode" class="form-label">Kod pocztowy:</label>
+            <input asp-for="PostalCode" class="form-control" />
+            <div class="invalid-feedback">Podaj prawidłowy kod pocztowy.</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Street" class="form-label">Ulica:</label>
+        <input asp-for="Street" class="form-control" />
+        <div class="invalid-feedback">Pole "Ulica" jest wymagane.</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+</form>

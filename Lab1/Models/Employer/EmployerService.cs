@@ -1,8 +1,9 @@
 ﻿using Data;
-using System.Collections.Generic;
+using Data.Entities;
+using Employee_App.Models.Employer;
 using System.Linq;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Employee_App.Mappers;
 
 namespace Employee_App.Models.Employer
 {
@@ -15,38 +16,76 @@ namespace Employee_App.Models.Employer
             _context = context;
         }
 
-        public IEnumerable<EmployerModel> GetAllEmployers()
+        public void AddEmployer(EmployerModel employerModel)
+        {
+            var addressEntity = new AddressEntity
+            {
+                City = employerModel.City,
+                Street = employerModel.Street,
+                PostalCode = employerModel.PostalCode
+            };
+            _context.Addresses.Add(addressEntity);
+
+            var employerEntity = new EmployerEntity
+            {
+                FirstName = employerModel.FirstName,
+                LastName = employerModel.LastName,
+                CompanyName = employerModel.CompanyName,
+                NIP = employerModel.NIP,
+                Address = addressEntity
+            };
+            _context.Employers.Add(employerEntity);
+
+            _context.SaveChanges();
+        }
+
+        public List<EmployerModel> GetAllEmployers()
         {
             return _context.Employers
-                .Select(employer => EmployerMapper.FromEntity(employer)).ToList();
+                .Include(e => e.Address)
+                .Select(employer => EmployerMapper.FromEntity(employer))
+                .ToList();
         }
 
         public EmployerModel GetEmployerById(int employerId)
         {
-            var entity = _context.Employers
+            var employer = _context.Employers
+                .Include(e => e.Address)
                 .FirstOrDefault(e => e.EmployerId == employerId);
 
-            return entity != null ? EmployerMapper.FromEntity(entity) : null;
+            return employer != null ? EmployerMapper.FromEntity(employer) : null;
         }
 
-        public void AddEmployer(EmployerModel employer)
+        public void UpdateEmployer(int id, EmployerModel employerModel)
         {
-            _context.Employers.Add(EmployerMapper.ToEntity(employer));
-            _context.SaveChanges();
-        }
+            var employer = _context.Employers
+                .Include(e => e.Address)
+                .FirstOrDefault(e => e.EmployerId == id);
 
-        public void UpdateEmployer(int id, EmployerModel employer)
-        {
-            _context.Employers.Update(EmployerMapper.ToEntity(employer));
-            _context.SaveChanges();
+            if (employer != null)
+            {
+                employer.FirstName = employerModel.FirstName;
+                employer.LastName = employerModel.LastName;
+                employer.CompanyName = employerModel.CompanyName;
+                employer.NIP = employerModel.NIP;
+
+                if (employer.Address != null)
+                {
+                    employer.Address.City = employerModel.City;
+                    employer.Address.Street = employerModel.Street;
+                    employer.Address.PostalCode = employerModel.PostalCode;
+                }
+
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteEmployer(int employerId)
         {
-            var entity = _context.Employers.Find(employerId);
-            if (entity != null)
+            var employer = _context.Employers.Find(employerId);
+            if (employer != null)
             {
-                _context.Employers.Remove(entity);
+                _context.Employers.Remove(employer);
                 _context.SaveChanges();
             }
         }

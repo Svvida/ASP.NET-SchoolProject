@@ -1,0 +1,23 @@
+﻿@model Employee_App.Models.Employer.EmployerModel
+
+<h2>Usuń Pracodawcę</h2>
+<h3>Czy jesteś pewien, że chcesz usunąć tego pracodawcę?</h3>
+
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">@Model.CompanyName</h4>
+        <div class="card-text">
+            <p><strong>Imię:</strong> @Model.FirstName</p>
+            <p><strong>Nazwisko:</strong> @Model.LastName</p>
+            <p><strong>NIP:</strong> @Model.NIP</p>
+            <p><strong>Miasto:</strong> @Model.City</p>
+            <p><strong>Ulica:</strong> @Model.Street</p>
+            <p><strong>Kod pocztowy:</strong> @Model.PostalCode</p>
+        </div>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="EmployerId" />
+            <button type="submit" class="btn btn-danger">Usuń</button>
+            <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+        </form>
+    </div>
+</div>

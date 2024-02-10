@@ -1,0 +1,32 @@
+﻿@model List<Employee_App.Models.Employer.EmployerModel>
+
+<h2>Lista Pracodawców</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Nazwa Firmy</th>
+            <th>NIP</th>
+            <th>Adres</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employer in Model)
+        {
+            <tr>
+                <td>@employer.FirstName</td>
+                <td>@employer.LastName</td>
+                <td>@employer.CompanyName</td>
+                <td>@employer.NIP</td>
+                <td>@employer.City, @employer.Street, @employer.PostalCode</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Employer", new { id = employer.EmployerId })" class="btn btn-primary btn-sm">Edytuj</a>
+                    <a href="@Url.Action("Delete", "Employer", new { id = employer.EmployerId })" class="btn btn-danger btn-sm">Usuń</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

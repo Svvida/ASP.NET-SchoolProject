@@ -6,7 +6,7 @@
 }
 <h2>Add Employee</h2>
 <form asp-action="Create" asp-controller="Employee" method="post">
-    <div asp-validation-summary="All"></div>
+    <div asp-validation-summary="All" class="text-danger"></div>
 
     <div>
         <label asp-for="FirstName"></label>
@@ -63,6 +63,32 @@
         </div>
         <input class="form-control" type="date" asp-for="TerminationDate" />
     </div>
+    <div class="form-group">
+        <label asp-for="Employer.CompanyName" class="control-label">Company Name</label>
+        <input asp-for="Employer.CompanyName" class="form-control" />
+        <span asp-validation-for="Employer.CompanyName" class="text-danger"></span>
+    </div>
 
-    <button type="submit">Save</button>
+    <div class="form-group">
+        <label asp-for="Employer.NIP" class="control-label">NIP</label>
+        <input asp-for="Employer.NIP" class="form-control" />
+        <span asp-validation-for="Employer.NIP" class="text-danger"></span>
+    </div>
+@*     <div class="form-group">
+        <label asp-for="Employer.Address.City" class="control-label">City</label>
+        <input asp-for="Employer.Address.City" class="form-control" />
+        <span asp-validation-for="Employer.Address.City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employer.Address.Street" class="control-label">Street</label>
+        <input asp-for="Employer.Address.Street" class="form-control" />
+        <span asp-validation-for="Employer.Address.Street" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Employer.Address.PostalCode" class="control-label">Postal Code</label>
+        <input asp-for="Employer.Address.PostalCode" class="form-control" />
+        <span asp-validation-for="Employer.Address.PostalCode" class="text-danger"></span>
+    </div> *@
+
+    <button type="submit" class="btn btn-primary">Save</button>
 </form>

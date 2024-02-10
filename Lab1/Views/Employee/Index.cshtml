@@ -1,49 +1,46 @@
-﻿@model List<Employee_App.Models.EmployeeModel>
+﻿@model List<Employee_App.Models.Employee.EmployeeModel>
 
 <h2>Employee List</h2>
 <p>
-    <a asp-action="Create">Add new employee</a>
+    <a asp-action="Create" class="btn btn-primary">Add New Employee</a>
 </p>
-@* @if(Model != null && Model.Count > 0){
-    foreach (var employee in Model)
-    {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>PESEL</th>
-                    <th>Position</th>
-                    <th>Department</th>
-                    <th>Hire Date</th>
-                    <th>Termination Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var employee in Model)
-                {
-                    <tr>
-                        <td>@employee.FirstName</td>
-                        <td>@employee.LastName</td>
-                        <td>@employee.PESEL</td>
-                        <td>@employee.PESEL</td>
-                        <td>@employee.Position</td>
-                        <td>@employee.Department</td>
-                        <td>@employee.HireDate.ToShortDateString()</td>
-                        <td>@employee.TerminationDate.ToString().Split()[0]</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@employee.Id">Details</a> |
-                            <a asp-action="Edit" asp-route-id="@employee.Id">Edit</a> |
-                            <a asp-action="Delete" asp-route-id="@employee.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-}
-else
+@if (Model != null && Model.Any())
 {
-    <p>No employees to display.</p>
-} *@
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>PESEL</th>
+                <th>Position</th>
+                <th>Department</th>
+                <th>Hire Date</th>
+                <th>Termination Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.LastName</td>
+                    <td>@employee.PESEL</td>
+                    <td>@employee.Position</td>
+                    <td>@employee.Department</td>
+                    <td>@employee.HireDate.ToShortDateString()</td>
+                    <td>@(employee.TerminationDate?.ToShortDateString() ?? "N/A")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@employee.Id" class="btn btn-info">Details</a>
+                        <a asp-action="Edit" asp-route-id="@employee.Id" class="btn btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@employee.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+    else
+    {
+        <p>No employees found</p>
+}

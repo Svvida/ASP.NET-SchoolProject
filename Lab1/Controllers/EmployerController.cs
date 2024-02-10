@@ -1,102 +1,68 @@
-﻿using Employee_App.Models;
-using Employee_App.Models.Employee;
-using Employee_App.Models.Employer;
-using Employee_App.Models.EmploymentHistory;
+﻿using Employee_App.Models.Employer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Employee_App.Controllers
 {
-    [Authorize]
     public class EmployerController : Controller
     {
         private readonly IEmployerService _employerService;
-
         public EmployerController(IEmployerService employerService)
         {
             _employerService = employerService;
         }
-
-        [AllowAnonymous]
         public IActionResult Index()
         {
             var employers = _employerService.GetAllEmployers();
             return View(employers);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View(new EmployerModel());
+        }
 
-        public IActionResult Details(int id)
+        [HttpPost]
+        public IActionResult Create(EmployerModel employerModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _employerService.AddEmployer(employerModel);
+                return RedirectToAction("Index");
+            }
+            return View(employerModel);
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
             var employer = _employerService.GetEmployerById(id);
-
             if (employer == null)
             {
                 return NotFound();
             }
-
             return View(employer);
         }
 
-        [HttpGet]
-        [Authorize(Roles = "admin")]
-        public IActionResult Create()
-        {
-            return View("Form");
-        }
-
-        [Authorize(Roles = "admin")]
         [HttpPost]
-        public IActionResult Create(EmployerModel model)
+        public IActionResult Edit(EmployerModel employerModel)
         {
             if (ModelState.IsValid)
             {
-                _employerService.AddEmployer(model);
+                _employerService.UpdateEmployer(employerModel.EmployerId, employerModel);
                 return RedirectToAction("Index");
             }
-            else
-            {
-                return View("Form", model);
-            }
+            return View(employerModel);
         }
-
-        [HttpGet]
-        public IActionResult Edit(int id)
-        {
-            var employee = _employerService.GetEmployerById(id);
-
-            if (employee == null)
-            {
-                return NotFound();
-            }
-
-            return View("Edit", employee);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(EmployerModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                _employerService.UpdateEmployer(model.EmployerId, model);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return View("Edit", model);
-            }
-        }
-
         [HttpGet]
         [Authorize(Roles = "admin")]
         public IActionResult Delete(int id)
         {
-            var employee = _employerService.GetEmployerById(id);
-
-            if (employee == null)
+            var employer = _employerService.GetEmployerById(id);
+            if (employer == null)
             {
                 return NotFound();
             }
-
-            return View(employee);
+            return View(employer);
         }
 
         [HttpPost, ActionName("Delete")]

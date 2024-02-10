@@ -1,0 +1,58 @@
+﻿@model Employee_App.Models.Employee.EmployeeModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<h2>Dodaj Pracownika</h2>
+
+<form asp-action="Create" class="needs-validation" novalidate>
+
+    <div class="form-group">
+        <label asp-for="FirstName" class="form-label">Imię</label>
+        <input asp-for="FirstName" class="form-control" required>
+        <div class="invalid-feedback">Pole "Imię" jest wymagane.</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="LastName" class="form-label">Nazwisko</label>
+        <input asp-for="LastName" class="form-control" required>
+        <div class="invalid-feedback">Pole "Nazwisko" jest wymagane.</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="PESEL" class="form-label">PESEL</label>
+        <input asp-for="PESEL" class="form-control" pattern="\d{11}" required>
+        <div class="invalid-feedback">Podaj poprawny numer PESEL (11 cyfr).</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Position" class="form-label">Stanowisko</label>
+        <input asp-for="Position" class="form-control" required>
+        <div class="invalid-feedback">Pole "Stanowisko" jest wymagane.</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Department" class="form-label">Dział</label>
+        <input asp-for="Department" class="form-control" required>
+        <div class="invalid-feedback">Pole "Dział" jest wymagane.</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HireDate" class="form-label">Data Zatrudnienia</label>
+        <input asp-for="HireDate" class="form-control" type="date" required>
+        <div class="invalid-feedback">Podaj poprawną datę zatrudnienia.</div>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TerminationDate" class="form-label">Data Zakończenia</label>
+        <input asp-for="TerminationDate" class="form-control" type="date">
+        <div class="invalid-feedback">Podaj poprawną datę zakończenia.</div>
+    </div>
+    <div class="form-group">
+        <label asp-for="EmployerId" class="form-label">Pracodawca</label>
+        <select asp-for="EmployerId" asp-items="ViewBag.Employers" class="form-control" required>
+            <option value="">Wybierz pracodawcę</option>
+        </select>
+        <div class="invalid-feedback">Wybierz pracodawcę.</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Utwórz</button>
+</form>

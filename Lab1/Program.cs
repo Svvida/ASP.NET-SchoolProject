@@ -2,10 +2,10 @@ using Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using Employee_App.Models.Employee;
-using Employee_App.Models.Employer;
-using Employee_App.Models.EmploymentHistory;
 using Employee_App.Models;
+using Employee_App.Models.Address;
+using Employee_App.Models.Employer;
+using Employee_App.Models.Employee;
 
 namespace Employee_App
 {
@@ -22,17 +22,17 @@ namespace Employee_App
             builder.Services.AddControllersWithViews();
             builder.Services.AddDbContext<Data.AppDbContext>();
            // builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
-
+           builder.Services.AddTransient<IEmployerService, EmployerService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddTransient<IAddressService,AddressService>();
             builder.Services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
-            builder.Services.AddTransient<IEmployeeService, EmployeeService>();
-            builder.Services.AddTransient<IEmployerService, EmployerService>();
-            builder.Services.AddTransient<IEmploymentHistoryService, EmploymentHistoryService>();
 
             builder.Services.AddMemoryCache();
             builder.Services.AddSession();
+
 
             var app = builder.Build();
 

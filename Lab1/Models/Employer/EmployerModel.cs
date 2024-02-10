@@ -1,9 +1,6 @@
-﻿using Employee_App.Models;
-using System;
-using System.Collections.Generic;
+﻿using Employee_App.Models.Address;
 using System.ComponentModel.DataAnnotations;
-using Employee_App.Models.Employee;
-using Employee_App.Models.EmploymentHistory;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Employee_App.Models.Employer
 {
@@ -26,10 +23,16 @@ namespace Employee_App.Models.Employer
         [Required(ErrorMessage = "NIP jest wymagany.")]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "NIP musi składać się z dokładnie 10 znaków.")]
         public string NIP { get; set; }
+        [ForeignKey("Addresses")]
+        public AddressModel Address { get; set; }
+        [Required(ErrorMessage = "Miasto jest wymagane")]
+        public string City { get; set; }
 
-        public List<EmployeeModel> Employees { get; set; }
+        [Required(ErrorMessage = "Ulica jest wymagana")]
+        public string Street { get; set; }
 
-        // Opcjonalnie: Historia zatrudnienia
-        public List<EmploymentHistoryModel> Employments { get; set; }
+        [Required(ErrorMessage = "Kod pocztowy jest wymagany")]
+        [RegularExpression(@"^\d{2}-\d{3}$", ErrorMessage = "Kod pocztowy musi być w formacie XX-XXX")]
+        public string PostalCode { get; set; }
     }
 }

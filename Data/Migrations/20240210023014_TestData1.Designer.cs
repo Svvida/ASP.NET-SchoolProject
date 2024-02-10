@@ -11,13 +11,52 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240209132322_HistoryAndEmployer")]
-    partial class HistoryAndEmployer
+    [Migration("20240210023014_TestData1")]
+    partial class TestData1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.26");
+
+            modelBuilder.Entity("Data.Entities.AddressEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 55,
+                            City = "City1",
+                            PostalCode = "00001",
+                            Street = "Street1"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            City = "City2",
+                            PostalCode = "00002",
+                            Street = "Street2"
+                        });
+                });
 
             modelBuilder.Entity("Data.Entities.EmployeeEntity", b =>
                 {
@@ -30,7 +69,7 @@ namespace Data.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("EmployerId")
+                    b.Property<int>("EmployerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("EmploymentDate")
@@ -70,23 +109,25 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Department = "IT",
-                            EmploymentDate = new DateTime(2010, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Jan",
-                            LastName = "Kowalski",
-                            PESEL = "12345678901",
-                            Position = "Programista"
+                            Id = 55,
+                            Department = "HR",
+                            EmployerId = 55,
+                            EmploymentDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Alice",
+                            LastName = "Smith",
+                            PESEL = "85050512345",
+                            Position = "Manager"
                         },
                         new
                         {
-                            Id = 2,
-                            Department = "Administracja",
-                            EmploymentDate = new DateTime(2015, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Anna",
-                            LastName = "Nowak",
-                            PESEL = "12345678902",
-                            Position = "Kierownik"
+                            Id = 66,
+                            Department = "IT",
+                            EmployerId = 66,
+                            EmploymentDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Bob",
+                            LastName = "Johnson",
+                            PESEL = "90090512345",
+                            Position = "Developer"
                         });
                 });
 
@@ -94,6 +135,9 @@ namespace Data.Migrations
                 {
                     b.Property<int>("EmployerId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AddressId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("CompanyName")
@@ -113,47 +157,33 @@ namespace Data.Migrations
 
                     b.Property<string>("NIP")
                         .IsRequired()
-                        .HasMaxLength(10)
                         .HasColumnType("TEXT");
 
                     b.HasKey("EmployerId");
 
+                    b.HasIndex("AddressId");
+
                     b.ToTable("Employers");
-                });
 
-            modelBuilder.Entity("Data.Entities.EmploymentHistoryEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Department")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("EmployerId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("EmploymentDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime?>("TerminationDate")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeeId");
-
-                    b.HasIndex("EmployerId");
-
-                    b.ToTable("EmploymentHistory");
+                    b.HasData(
+                        new
+                        {
+                            EmployerId = 55,
+                            AddressId = 55,
+                            CompanyName = "JDoe Inc.",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            NIP = "1234567890"
+                        },
+                        new
+                        {
+                            EmployerId = 66,
+                            AddressId = 66,
+                            CompanyName = "JDoe & Co.",
+                            FirstName = "Jane",
+                            LastName = "Doe",
+                            NIP = "0987654321"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -180,22 +210,6 @@ namespace Data.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "c10dfb4f-362c-41c6-a90b-1ee2ff70f500",
-                            ConcurrencyStamp = "c10dfb4f-362c-41c6-a90b-1ee2ff70f500",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        },
-                        new
-                        {
-                            Id = "8777913b-74f7-41b8-8794-0221781fd9c2",
-                            ConcurrencyStamp = "8777913b-74f7-41b8-8794-0221781fd9c2",
-                            Name = "user",
-                            NormalizedName = "user"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -283,40 +297,6 @@ namespace Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "9b5cd847-30a7-420e-8559-f1561c1605ff",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "561593b0-b490-41e9-8a7e-565c0c8a2e2c",
-                            Email = "admin@wsei.edu.pl",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@WSEI.EDU.PL",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOY/EfxkYnmQ6zajFHIOVZe12SwH2QU49Gh2EsWyhvHPwCA2admXfgXaMCA6KKgAgQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "e21f4848-6fe1-4355-8225-e83ee470b40a",
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = "3be79401-c412-491e-8267-957b43d9864a",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "ce6141ad-d8ad-4590-9e45-daeba05b6d20",
-                            Email = "user@wsei.edu.pl",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "USER@WSEI.EDU.PL",
-                            NormalizedUserName = "USER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAeZ9CHBYiMF2DhRGKM7TIanWzETUzRaAM22LyS9nhBOLm3OYX/rs/2i9yasvgueEQ==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "d29fce31-771f-485a-a661-ca2f31ea1404",
-                            TwoFactorEnabled = false,
-                            UserName = "user"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -377,18 +357,6 @@ namespace Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "9b5cd847-30a7-420e-8559-f1561c1605ff",
-                            RoleId = "c10dfb4f-362c-41c6-a90b-1ee2ff70f500"
-                        },
-                        new
-                        {
-                            UserId = "3be79401-c412-491e-8267-957b43d9864a",
-                            RoleId = "8777913b-74f7-41b8-8794-0221781fd9c2"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -414,28 +382,22 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Entities.EmployerEntity", "Employer")
                         .WithMany("Employees")
-                        .HasForeignKey("EmployerId");
-
-                    b.Navigation("Employer");
-                });
-
-            modelBuilder.Entity("Data.Entities.EmploymentHistoryEntity", b =>
-                {
-                    b.HasOne("Data.Entities.EmployeeEntity", "Employee")
-                        .WithMany("EmploymentHistory")
-                        .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Entities.EmployerEntity", "Employer")
-                        .WithMany("Employments")
                         .HasForeignKey("EmployerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employee");
-
                     b.Navigation("Employer");
+                });
+
+            modelBuilder.Entity("Data.Entities.EmployerEntity", b =>
+                {
+                    b.HasOne("Data.Entities.AddressEntity", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -489,16 +451,9 @@ namespace Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Data.Entities.EmployeeEntity", b =>
-                {
-                    b.Navigation("EmploymentHistory");
-                });
-
             modelBuilder.Entity("Data.Entities.EmployerEntity", b =>
                 {
                     b.Navigation("Employees");
-
-                    b.Navigation("Employments");
                 });
 #pragma warning restore 612, 618
         }

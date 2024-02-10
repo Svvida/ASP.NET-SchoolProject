@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-
-namespace Employee_App.Models.Employer
+﻿namespace Employee_App.Models.Employer
 {
     public interface IEmployerService
     {
-        IEnumerable<EmployerModel> GetAllEmployers();
-        EmployerModel GetEmployerById(int employerId);
-        void AddEmployer(EmployerModel employer);
-        void UpdateEmployer(int id, EmployerModel employer);
-        void DeleteEmployer(int employerId);
+        public void AddEmployer(EmployerModel employerModel);
+        public void UpdateEmployer(int id, EmployerModel employerModel);
+        public void DeleteEmployer(int id);
+        public List<EmployerModel> GetAllEmployers();
+        public EmployerModel GetEmployerById(int employerId);
+
     }
 }

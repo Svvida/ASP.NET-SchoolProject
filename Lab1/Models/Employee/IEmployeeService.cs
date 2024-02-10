@@ -2,10 +2,10 @@
 {
     public interface IEmployeeService
     {
-        IEnumerable<EmployeeModel> GetAllEmployees();
-        EmployeeModel GetEmployeeById(int employeeid);
+        List<EmployeeModel> GetAllEmployees();
+        EmployeeModel GetEmployeeById(int employeeId);
         void AddEmployee(EmployeeModel employee);
-        void UpdateEmployee(int id, EmployeeModel employee);
-        void DeleteEmployee(int employeeid);
+        void UpdateEmployee(EmployeeModel employee);
+        void DeleteEmployee(int employeeId);
     }
 }

@@ -1,32 +1,38 @@
 ﻿using Data.Entities;
 using Employee_App.Models.Employer;
 
-namespace Employee_App.Mappers
+public static class EmployerMapper
 {
-    public class EmployerMapper
+    public static EmployerModel FromEntity(EmployerEntity entity)
     {
-        public static EmployerEntity ToEntity(EmployerModel model)
+        return new EmployerModel
         {
-            return new EmployerEntity
-            {
-                EmployerId = model.EmployerId,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                CompanyName = model.CompanyName,
-                NIP = model.NIP
-            };
-        }
+            EmployerId = entity.EmployerId,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
+            CompanyName = entity.CompanyName,
+            NIP = entity.NIP,
+            City = entity.Address?.City,
+            Street = entity.Address?.Street,
+            PostalCode = entity.Address?.PostalCode
+        };
+    }
 
-        public static EmployerModel FromEntity(EmployerEntity entity)
+    public static EmployerEntity ToEntity(EmployerModel model)
+    {
+        return new EmployerEntity
         {
-            return new EmployerModel
+            EmployerId = model.EmployerId,
+            FirstName = model.FirstName,
+            LastName = model.LastName,
+            CompanyName = model.CompanyName,
+            NIP = model.NIP,
+            Address = new AddressEntity
             {
-                EmployerId = entity.EmployerId,
-                FirstName = entity.FirstName,
-                LastName = entity.LastName,
-                CompanyName = entity.CompanyName,
-                NIP = entity.NIP
-            };
-        }
+                City = model.City,
+                Street = model.Street,
+                PostalCode = model.PostalCode
+            }
+        };
     }
 }

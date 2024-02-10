@@ -25,13 +25,12 @@ namespace Data.Entities
         [MaxLength(50)]
         [Required]
         public string CompanyName { get; set; }
-        [MinLength(10)]
-        [MaxLength(10)]
         [Required]
+        [RegularExpression(@"^\d{10}$")]
         public string NIP { get; set; }
-        public ICollection <EmployeeEntity> Employees { get; set; }
-
-        public ICollection<EmploymentHistoryEntity> Employments { get; set; }
-
+        public int AddressId { get; set; }
+        [ForeignKey("AddressId")]
+        public AddressEntity Address { get; set; }
+        public ICollection<EmployeeEntity> Employees { get; set; }
     }
 }
