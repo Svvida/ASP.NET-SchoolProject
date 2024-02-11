@@ -1,30 +1,54 @@
-# ASP.NET_School
-Dokumentacja Aplikacji
+#Dokumentacja Projektu
 
-Funkcje Aplikacji
-Utrwalanie Danych w Bazie
-Baza Danych: SQLite / MS SQL
-Moduł: Entity Framework
-Inicjacja Danych: Aplikacja inicjuje bazę danych przykładowymi danymi pracowników (EmployeeEntity), pracodawców (EmployerEntity) oraz adresów (AddressEntity).
+Dane techniczne:
+.NET Core 6.0
+Użyte pakiety:
+Microsoft.AspNetCore.Identity.EntityFramework
+Microsoft.AspNetCore.Identity.UI
+Microsoft.AspNetCore.Mvc.DataAnnotations
+Microsoft.EntityFrameworkCore
+Microsoft.EntityFrameworkCore.Design
+Microsoft.EntityFrameworkCore.Sqlite
+Microsoft.EntityFrameworkCore.Tools
+Microsoft.VisualStudio.Web.CodeGeneration.Design
 
-Związki w Bazie Danych
-Związek Pracodawca-Adres: Każdy pracodawca (EmployerEntity) jest powiązany z jednym adresem (AddressEntity).
-Związek Pracownik-Pracodawca: Każdy pracownik (EmployeeEntity) jest powiązany z jednym pracodawcą (EmployerEntity).
+Przegląd
+Aplikacja służy do zarządzania pracownikami i pracodawcami. Umożliwia ona tworzenie, przeglądanie, edytowanie i usuwanie danych pracowników oraz pracodawców.
 
-Serwis CRUD
-Funkcje: Create, Read, Update, Delete
-Zastosowanie: Funkcje CRUD dostępne są dla encji Pracownik, Pracodawca, Adres.
-Obsługa: Zarządzanie danymi jest możliwe poprzez interfejs API.
+W razie chęci testów wszystkich możliwych funkcjonalności proszę użyć konta:
+admin@wsei.edu.pl
+P@ssword1
+
+Architektura
+Projekt oparty jest na ASP.NET Core z użyciem wzorca MVC (Model-View-Controller) oraz widoków Razor.
+
+Utrwalanie Danych
+Wykorzystanie Entity Framework Core.
+Baza danych: SQLite.
+AppDbContext służy do konfiguracji połączenia z bazą danych oraz definicji DbSet dla encji.
+
+Encje
+EmployeeEntity: reprezentuje pracowników z polami takimi jak Imię, Nazwisko, PESEL itp.
+EmployerEntity: reprezentuje pracodawców.
+AddressEntity: zawiera adresy pracodawców.
+Relacje: Każdy pracownik (EmployeeEntity) jest przypisany do pracodawcy (EmployerEntity).
 
 Moduł Identity
-Role: Administrator, Zwykły Użytkownik
-Funkcje: Logowanie, zarządzanie rolami użytkowników.
-Zastosowanie: Ograniczenie dostępu do wybranych funkcji aplikacji w zależności od roli użytkownika.
+Uwierzytelnianie i autoryzacja użytkowników.
+Role: Administrator i zwykły użytkownik.
+Obsługa rejestracji i logowania.
 
-Interfejs Użytkownika
-Formularze CRUD: Formularze do tworzenia, odczytu, aktualizacji i usuwania danych.
+Operacje CRUD
+Kontrolery EmployeeController i EmployerController dla operacji CRUD.
+Walidacja danych i obsługa błędów w formularzach.
 
-Widoki: Listy obiektów (Pracowników, Pracodawców, Adresów) z możliwością zarządzania przez administratora.
+Widoki i Formularze
+Formularze do dodawania, edycji i usuwania pracowników i pracodawców.
+Użycie Bootstrap do stylizacji formularzy.
+Walidacja po stronie klienta.
 
+Kontroler API
+Wyszukiwarka pracowników na podstawie wybranej kategorii oparta o kontroler API
 
-Wyszukiwanie: Możliwość wyszukiwania danych pracowników w bazie przy użyciu wyszuki opartej na WebAPI.
+Podsumowanie
+Aplikacja stanowi kompleksowe rozwiązanie do zarządzania pracownikami i pracodawcami, z możliwością dalszego rozwoju i implementacji nowych funkcjonalności.
