@@ -20,7 +20,7 @@ namespace Employee_App.Models.Employee
             var employees = _context.Employees
                 .Include(e => e.Employer)
                 .ThenInclude(employer => employer.Address)
-                .ToList() // Fetch the data from the database
+                .ToList()
                 .Select(e => new EmployeeModel
                 {
                     Id = e.Id,
@@ -29,20 +29,6 @@ namespace Employee_App.Models.Employee
                     PESEL = e.PESEL,
                     Position = e.Position,
                     Department = e.Department,
-                    Employer = e.Employer != null ? new EmployerModel
-                    {
-                        EmployerId = e.Employer.EmployerId,
-                        CompanyName = e.Employer.CompanyName,
-                        FirstName = e.Employer.FirstName,
-                        LastName = e.Employer.LastName,
-                        NIP = e.Employer.NIP,
-                        Address = e.Employer.Address != null ? new AddressModel
-                        {
-                            City = e.Employer.Address.City,
-                            Street = e.Employer.Address.Street,
-                            PostalCode = e.Employer.Address.PostalCode
-                        } : null
-                    } : null
                 })
                 .ToList();
 
@@ -96,34 +82,31 @@ namespace Employee_App.Models.Employee
         }
         public EmployeeModel GetEmployeeById(int id)
         {
-            var employee = _context.Employees
+            var employeeEntity = _context.Employees
                 .Include(e => e.Employer)
-                .ThenInclude(e => e.Address)
                 .FirstOrDefault(e => e.Id == id);
 
-            return employee != null ? new EmployeeModel
+            if (employeeEntity == null) return null;
+
+            var employeeModel = new EmployeeModel
             {
-                Id = employee.Id,
-                FirstName = employee.FirstName,
-                LastName = employee.LastName,
-                PESEL = employee.PESEL,
-                Position = employee.Position,
-                Department = employee.Department,
-                Employer = employee.Employer != null ? new EmployerModel
+                Id = employeeEntity.Id,
+                FirstName = employeeEntity.FirstName,
+                LastName = employeeEntity.LastName,
+                PESEL = employeeEntity.PESEL,
+                Position = employeeEntity.Position,
+                Department = employeeEntity.Department,
+                HireDate = employeeEntity.EmploymentDate,
+                TerminationDate = employeeEntity.TerminationDate,
+                Employer = new EmployerModel
                 {
-                    EmployerId = employee.Employer.EmployerId,
-                    CompanyName = employee.Employer.CompanyName,
-                    FirstName = employee.Employer.FirstName,
-                    LastName = employee.Employer.LastName,
-                    NIP = employee.Employer.NIP,
-                    Address = employee.Employer.Address != null ? new AddressModel
-                    {
-                        City = employee.Employer.Address.City,
-                        Street = employee.Employer.Address.Street,
-                        PostalCode = employee.Employer.Address.PostalCode
-                    } : null,
-                } : null,
-            } : null;
+                    EmployerId = employeeEntity.Employer.EmployerId,
+                    CompanyName = employeeEntity.Employer.CompanyName,
+                    NIP = employeeEntity.Employer.NIP,
+                }
+            };
+
+            return employeeModel;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Employee_App.Models.Employer;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -50,7 +51,9 @@ namespace Employee_App.Models.Employee
         [ValidateTermination(ErrorMessage = "Data zakończenia musi być późniejsza niż data zatrudnienia.")]
         public DateTime? TerminationDate { get; set; }
         [ForeignKey("Employers")]
+        [Required(ErrorMessage = "Pracodawca jest wymagany.")]
         public int EmployerId { get; set; }
+        [ValidateNever]
         public EmployerModel Employer { get; set; }
     }
     public class ValidateTerminationAttribute : ValidationAttribute

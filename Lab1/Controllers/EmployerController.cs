@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Employee_App.Controllers
 {
+    [Authorize]
     public class EmployerController : Controller
     {
         private readonly IEmployerService _employerService;
@@ -11,6 +12,7 @@ namespace Employee_App.Controllers
         {
             _employerService = employerService;
         }
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var employers = _employerService.GetAllEmployers();

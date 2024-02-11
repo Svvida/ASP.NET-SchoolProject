@@ -38,24 +38,14 @@
                 <th>Data Zakończenia</th>
                 <td>@Html.DisplayFor(model => model.TerminationDate)</td>
             </tr>
-
-            @if (Model.Employer != null)
-            {
                 <tr>
                     <th>Nazwa Firmy</th>
-                    <td>@Model.Employer.CompanyName</td>
+                    <td>@Html.DisplayFor(model => model.Employer.CompanyName)</td>
                 </tr>
                 <tr>
                     <th>NIP</th>
-                    <td>@Model.Employer.NIP</td>
+                    <td>@Html.DisplayFor(model => model.Employer.NIP)</td>
                 </tr>
-            }
-            else
-            {
-                <tr>
-                    <td colspan="2" class="text-center">Informacje o Pracodawcy niedostępne</td>
-                </tr>
-            }
         </tbody>
     </table>
 

@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Employee_App.Models.Employer;
 using Microsoft.EntityFrameworkCore;
 using Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Employee_App.Controllers
 {
+    [Authorize]
     public class EmployeeController : Controller
     {
         private readonly AppDbContext _context;
@@ -19,7 +21,7 @@ namespace Employee_App.Controllers
             _employeeService = employeeService;
             _employerService = employerService;
         }
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var employees = _employeeService.GetAllEmployees();
@@ -35,6 +37,10 @@ namespace Employee_App.Controllers
         {
             var employers = _employerService.GetAllEmployers();
             ViewBag.Employers = new SelectList(employers, "EmployerId", "CompanyName");
+            var model = new EmployeeModel
+            {
+                HireDate = DateTime.Today,
+            };
             return View();
         }
 
@@ -48,6 +54,7 @@ namespace Employee_App.Controllers
             }
             return View(model);
         }
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             var employee = _employeeService.GetEmployeeById(id);
@@ -73,5 +80,56 @@ namespace Employee_App.Controllers
                 return View(model);
             }
         }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var employee = _employeeService.GetEmployeeById(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            var employers = _employerService.GetAllEmployers();
+            ViewBag.Employers = new SelectList(employers, "EmployerId", "CompanyName", employee.EmployerId);
+
+            return View(employee);
+        }
+        [HttpPost]
+        public IActionResult Edit(int id, EmployeeModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _employeeService.UpdateEmployee(model);
+                return RedirectToAction("Index");
+            }
+
+            var employers = _employerService.GetAllEmployers();
+            ViewBag.Employers = new SelectList(employers, "EmployerId", "CompanyName", model.EmployerId);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var employee = _context.Employees.Find(id);
+            if (employee != null)
+            {
+                _context.Employees.Remove(employee);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public IActionResult ConfirmDelete(int id)
+        {
+            var employee = _employeeService.GetEmployeeById(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+
+
     }
 }

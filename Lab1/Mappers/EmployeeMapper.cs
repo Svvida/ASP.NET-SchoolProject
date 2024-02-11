@@ -11,17 +11,19 @@ public static class EmployeeMapper
             Id = entity.Id,
             FirstName = entity.FirstName,
             LastName = entity.LastName,
-            Employer = entity.Employer == null ? null : new EmployerModel
-            {
-                EmployerId = entity.Employer.EmployerId,
-                FirstName = entity.Employer.FirstName,
-                LastName = entity.Employer.LastName,
-                CompanyName = entity.Employer.CompanyName,
-                NIP = entity.Employer.NIP,
-                City = entity.Employer.Address?.City,
-                Street = entity.Employer.Address?.Street,
-                PostalCode = entity.Employer.Address?.PostalCode
-            }
+            HireDate=entity.EmploymentDate,
+            TerminationDate=entity.TerminationDate,
+            //Employer = entity.Employer == null ? null : new EmployerModel
+            //{
+            //    EmployerId = entity.Employer.EmployerId,
+            //    FirstName = entity.Employer.FirstName,
+            //    LastName = entity.Employer.LastName,
+            //    CompanyName = entity.Employer.CompanyName,
+            //    NIP = entity.Employer.NIP,
+            //    City = entity.Employer.Address?.City,
+            //    Street = entity.Employer.Address?.Street,
+            //    PostalCode = entity.Employer.Address?.PostalCode
+            //}
         };
     }
 
@@ -32,20 +34,22 @@ public static class EmployeeMapper
             Id = model.Id,
             FirstName = model.FirstName,
             LastName = model.LastName,
-            Employer = model.Employer == null ? null : new EmployerEntity
-            {
-                EmployerId = model.Employer.EmployerId,
-                FirstName = model.Employer.FirstName,
-                LastName = model.Employer.LastName,
-                CompanyName = model.Employer.CompanyName,
-                NIP = model.Employer.NIP,
-                Address = new AddressEntity
-                {
-                    City = model.Employer.City,
-                    Street = model.Employer.Street,
-                    PostalCode = model.Employer.PostalCode
-                }
-            }
+            EmploymentDate=model.HireDate,
+            TerminationDate=model.TerminationDate,
+            //Employer = model.Employer == null ? null : new EmployerEntity
+            //{
+            //    EmployerId = model.Employer.EmployerId,
+            //    FirstName = model.Employer.FirstName,
+            //    LastName = model.Employer.LastName,
+            //    CompanyName = model.Employer.CompanyName,
+            //    NIP = model.Employer.NIP,
+            //    Address = new AddressEntity
+            //    {
+            //        City = model.Employer.City,
+            //        Street = model.Employer.Street,
+            //        PostalCode = model.Employer.PostalCode
+            //    }
+            //}
         };
     }
 }

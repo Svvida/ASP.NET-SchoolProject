@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,7 +31,9 @@ namespace Data.Entities
         public string NIP { get; set; }
         public int AddressId { get; set; }
         [ForeignKey("AddressId")]
+        [ValidateNever]
         public AddressEntity Address { get; set; }
+        [ValidateNever]
         public ICollection<EmployeeEntity> Employees { get; set; }
     }
 }

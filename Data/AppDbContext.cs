@@ -60,6 +60,7 @@ namespace Data
             };
             PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
             admin.PasswordHash = ph.HashPassword(admin, "P@ssword1");
+            user.PasswordHash = ph.HashPassword(user, "P@ssword1");
             modelBuilder.Entity<IdentityUser>().HasData(user);
             modelBuilder.Entity<IdentityUser>().HasData(admin);
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>

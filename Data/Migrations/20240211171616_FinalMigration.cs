@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class FinalMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -218,6 +218,66 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Addresses",
+                columns: new[] { "Id", "City", "PostalCode", "Street" },
+                values: new object[] { 55, "City1", "00001", "Street1" });
+
+            migrationBuilder.InsertData(
+                table: "Addresses",
+                columns: new[] { "Id", "City", "PostalCode", "Street" },
+                values: new object[] { 66, "City2", "00002", "Street2" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "bda25231-ad4a-47fe-a35f-aa36a12f4b69", "bda25231-ad4a-47fe-a35f-aa36a12f4b69", "Admin", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "d0c50319-f535-41ef-baeb-1497a4576b4e", "d0c50319-f535-41ef-baeb-1497a4576b4e", "User", "USER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "94d33fbc-2c88-44c8-9bba-c821ad822cfb", 0, "90bf7249-05a0-4476-89d8-3debd576f7df", "", false, false, null, null, "USER", "AQAAAAEAACcQAAAAEEnEv9JeIBqSWo9alGrEZgM6gI/vnQWnzc1Yid6dwz/sJc7OI9gpOtszGrEgl2d89Q==", null, false, "0b12e127-25dd-461e-b69f-5b927ffd3a4a", false, "user" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { "eb2f1f9c-657e-4d57-a802-323c0085d245", 0, "429dae23-f8b5-4670-a723-9680f60476b6", "admin@wsei.edu.pl", false, false, null, "ADMIN@WSEI.EDU.PL", "ADMIN", "AQAAAAEAACcQAAAAEFSxX7lPygTz3c9pL/9pC2pmU58PbvdlHyLeabqPiZ3vASJmigKrqEZ2XuGszOtRDQ==", null, false, "33e8c5b9-ee85-4f7e-afee-6ac5d4abecd0", false, "admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "d0c50319-f535-41ef-baeb-1497a4576b4e", "94d33fbc-2c88-44c8-9bba-c821ad822cfb" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "bda25231-ad4a-47fe-a35f-aa36a12f4b69", "eb2f1f9c-657e-4d57-a802-323c0085d245" });
+
+            migrationBuilder.InsertData(
+                table: "Employers",
+                columns: new[] { "EmployerId", "AddressId", "CompanyName", "FirstName", "LastName", "NIP" },
+                values: new object[] { 55, 55, "JDoe Inc.", "John", "Doe", "1234567890" });
+
+            migrationBuilder.InsertData(
+                table: "Employers",
+                columns: new[] { "EmployerId", "AddressId", "CompanyName", "FirstName", "LastName", "NIP" },
+                values: new object[] { 66, 66, "JDoe & Co.", "Jane", "Doe", "0987654321" });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "Department", "EmployerId", "employment_date", "FirstName", "LastName", "PESEL", "Position", "termination_date" },
+                values: new object[] { 55, "HR", 55, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Alice", "Smith", "85050512345", "Manager", null });
+
+            migrationBuilder.InsertData(
+                table: "Employees",
+                columns: new[] { "Id", "Department", "EmployerId", "employment_date", "FirstName", "LastName", "PESEL", "Position", "termination_date" },
+                values: new object[] { 66, "IT", 66, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Bob", "Johnson", "90090512345", "Developer", null });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -263,8 +323,7 @@ namespace Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Employers_AddressId",
                 table: "Employers",
-                column: "AddressId",
-                unique: true);
+                column: "AddressId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

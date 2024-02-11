@@ -23,8 +23,7 @@ namespace Employee_App.Models.Employer
         [Required(ErrorMessage = "NIP jest wymagany.")]
         [StringLength(10, MinimumLength = 10, ErrorMessage = "NIP musi składać się z dokładnie 10 znaków.")]
         public string NIP { get; set; }
-        [ForeignKey("Addresses")]
-        public AddressModel Address { get; set; }
+
         [Required(ErrorMessage = "Miasto jest wymagane")]
         public string City { get; set; }
 

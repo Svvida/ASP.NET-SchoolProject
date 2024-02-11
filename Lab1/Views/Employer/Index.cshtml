@@ -1,9 +1,11 @@
 ﻿@model List<Employee_App.Models.Employer.EmployerModel>
 
 <h2>Lista Pracodawców</h2>
-
+<p>
+    <a asp-action="Create" class="btn btn-primary">Dodaj pracodawcę</a>
+</p>
 <table class="table table-bordered table-striped">
-    <thead>
+    <thead class="table-dark">
         <tr>
             <th>Imię</th>
             <th>Nazwisko</th>
